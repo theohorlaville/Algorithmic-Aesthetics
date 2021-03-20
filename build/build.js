@@ -18,8 +18,7 @@ function draw() {
     var color = 200;
     var circle = 0;
     fill(0);
-    var texte = text("Georg Nees , Schotter by Théo HORLAVILLE | IMAC 2023", 0, height * 0.95);
-    texte.center();
+    text("Georg Nees , Schotter by Théo HORLAVILLE | IMAC 2023", 0, height * 0.95);
     noFill();
     for (var i = 0; i < 22; i++) {
         k += 1.5 * params.rot;
