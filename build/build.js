@@ -3,11 +3,14 @@ var params = {
     deca: 1,
     rot: 1,
     taille: 1,
+    noiseScale: 1,
+    noiseAmplitude: 0,
+    inclinaison: 1,
     Download_Image: function () { return save(); },
 };
 gui.add(params, "deca", 0, 10, 0.1);
 gui.add(params, "rot", 0, 10, 0.1);
-gui.add(params, "taille", -5, 5, 0.1);
+gui.add(params, "taille", 0, 5, 0.1);
 gui.add(params, "Download_Image");
 function draw() {
     background('#ffffff');
@@ -15,29 +18,31 @@ function draw() {
     var k = 0;
     var l = 0;
     var x = 0;
+    var y = 0;
     var color = 200;
-    var circle = 0;
     fill(0);
-    text("Georg Nees , Schotter by Théo HORLAVILLE | IMAC 2023", 0, height * 0.95);
+    textSize(height / 60);
+    textAlign(CENTER);
+    text("Georg Nees , Schotter by Théo HORLAVILLE | IMAC 2023", width / 2, height * 0.98);
     noFill();
+    translate(width / 2 - width / 3.5 - (11 / 2) * 30 * params.taille, 0);
     for (var i = 0; i < 22; i++) {
         k += 1.5 * params.rot;
         l += 0.8 * params.deca;
-        circle += 0.75;
         for (var j = 0; j < 11; j++) {
             push();
             x += 30;
             var randX = random(-1 * l, 1 * l);
             var randY = random(-1 * l, 1 * l);
             var randRot = random(-1 * k, 1 * k);
-            translate(width / 3.5 + x * params.taille + randX, height / 8 + randY);
+            translate(width / 3.5 + x * params.taille + randX, height / 8 + randY + y);
             rotate(radians(randRot));
             rect(0, 0, 30 * params.taille, 30 * params.taille);
             pop();
         }
         x = 0;
         color += 11.6;
-        translate(0, 30 * params.taille);
+        y += 30 * params.taille;
     }
 }
 function setup() {

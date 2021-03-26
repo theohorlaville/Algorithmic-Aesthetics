@@ -7,11 +7,17 @@ const params = {
     deca:1,
     rot:1,
     taille:1,
+    noiseScale:1,
+    noiseAmplitude:0,
+    inclinaison:1,
     Download_Image: () => save(),
 }
 gui.add(params, "deca", 0, 10, 0.1)
 gui.add(params, "rot", 0, 10, 0.1)
-gui.add(params, "taille", -5, 5, 0.1)
+gui.add(params, "taille", 0, 5, 0.1)
+// gui.add(params, "noiseScale",0,0.1,0.000001) // VERSION NOISE
+// gui.add(params, "noiseAmplitude",0,100,1) // VERSION NOISE
+//gui.add(params, "inclinaison", 0,10,0.1) // VERSION NOISE
 gui.add(params, "Download_Image")
 
 // -------------------
@@ -20,105 +26,53 @@ gui.add(params, "Download_Image")
 
 function draw() {
     
-/*
+    background('#ffffff');
 
-randomSeed(0);
-noStroke;
-background('#03cffc');
-translate(width/2, height/2);
-fill(102, 255, 204);
-for(let i=0; i<params.n;i++){
-    rect(random(100),random(100),random(10),random(-10));
-}
-for(let i=0; i<params.n;i++){
-    const angle=random(TWO_PI);
-    let radius =randomGaussian(0, params.dispersion*width)
-    while(abs(radius)>params.dispersion*width*0.8){
-        radius =randomGaussian(0, params.dispersion*width)
-    }
-    fill(255, 255, 153);
-    const p=p5.Vector.fromAngle(angle).mult(radius);
-    ellipse(p.x,p.y,10);
-}
-fill(random(255),random(255),random(255));
-ellipse(0,0,width);
+    randomSeed(0)
 
-for(let i=0;i<32;i++){   
-   fill(random(255),random(255),random(255));
-   ellipse(width/4, 0, width/2,30)
-   rotate(radians(360/32));
-    
+    let k=0;
+    let l=0;
+    let x=0;
+    let y=0;
+    let color=200;
+    // let circle=0; // VERSION ROUNDED SQUARE
+    fill(0);
+    textSize(height/60);
+    textAlign(CENTER)
+    text("Georg Nees , Schotter by Théo HORLAVILLE | IMAC 2023",width/2,height*0.98); 
+    noFill();
+    translate(width/2-width/3.5-(11/2)*30*params.taille, 0); // centrer la figure
    
-}
 
-
-let x=0;
-let y=0;
-background('#03cffc');
-for(let i=0;i<7;i++){
-
-    let flag=0;
-    for(let j=0;j<7;j++){
+    for (let i=0;i<22;i++)
+    {
         
-        if(flag==0){
-            fill(255,255,255);
-            rect(x,y,40,40)
-            flag++
+        k+=1.5*params.rot;
+        l+=0.8*params.deca;
+        //circle+=0.75; // VERSION ROUNDED SQUARE
+
+        for(let j=0;j<11;j++)
+        {   
+            push();
+                x+=30;
+                let randX=random(-1*l,1*l);
+                let randY=random(-1*l,1*l);
+                let randRot=random(-1*k,1*k); 
+                //let randX=noise(x*params.noiseScale,y*params.noiseScale)*params.noiseAmplitude; // VERSION NOISE
+                //let randY=noise(x*params.noiseScale,y*params.noiseScale)*params.noiseAmplitude; // VERSION NOISE
+                //let randRot=noise(x*params.rot,y*params.rot)*TWO_PI*4*params.inclinaison; // VERSION NOISE
+                translate(width/3.5+x*params.taille+randX,height/8+randY+y);
+                rotate(radians(randRot));
+                //rect(0,0,30*params.taille,30*params.taille,circle);    // VERSION ROUNDED SQUARE
+                rect(0,0,30*params.taille,30*params.taille);
+            pop();
         }
-        else{
-            fill(0,0,0)
-            rect(x,y,40,40)
-            flag--
-        }
-        x+=40;
-
+        
+        x=0;
+        color+=11.6;
+        y+=30*params.taille;
+            
     }
-    x=0;
-    y+=40;
-}*/
-
-background('#ffffff');
-
-randomSeed(0)
-
-let k=0;
-let l=0;
-let x=0;
-let color=200;
-let circle=0;
-fill(0);
-text("Georg Nees , Schotter by Théo HORLAVILLE | IMAC 2023",0,height*0.95); 
-noFill();
-for (let i=0;i<22;i++)
-{
-    
-    k+=1.5*params.rot;
-    l+=0.8*params.deca;
-    circle+=0.75;
-
-    
-
-    for(let j=0;j<11;j++)
-    {   
-        push();
-        x+=30;
-        let randX=random(-1*l,1*l)
-        let randY=random(-1*l,1*l)
-        let randRot=random(-1*k,1*k)
-        translate(width/3.5+x*params.taille+randX,height/8+randY)  
-        rotate(radians(randRot))
-        //stroke(0+random(color),0+random(color),0+random(color));
-        //stroke("#ffffff");
-        //fill(0,0,0+random(color));
-        //rect(0,0,30,30,circle)
-        rect(0,0,30*params.taille,30*params.taille)
-        pop() 
-    }
-    
-    x=0;
-    color+=11.6;
-    translate(0,30*params.taille)       
-}
 
 }
 
